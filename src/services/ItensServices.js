@@ -3,6 +3,7 @@ const db = require('../db');
 
 module.exports = {
     listarItens(){
+        console.log('Chegou no service');
         return db.query('SELECT * FROM public.materiais ORDER BY id');       
     },
 
