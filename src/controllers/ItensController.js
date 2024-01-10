@@ -3,6 +3,7 @@ const ItemService = require('../services/ItensServices');
 
 module.exports = {
     async listarTudo(req, res){
+        console.log('Chegou no controller');
         let json = {error:'', result:[]};
 
         let itens = await ItemService.listarItens();
