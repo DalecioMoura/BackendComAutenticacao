@@ -30,6 +30,7 @@ module.exports = {
         let json = {error:'', result:[]};
 
         let id = req.params.id;
+        console.log("valor requisição: "+id)
         let itens = await ItemService.listarItem(id);
         
         if(itens)

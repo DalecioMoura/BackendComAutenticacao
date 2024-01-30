@@ -8,7 +8,7 @@ module.exports = {
     },
 
     listarItem(id){
-        return db.query('SELECT * FROM public.materiais WHERE codigo = $1',[codigo]);
+        return db.query('SELECT * FROM public.materiais WHERE codigo = $1',[id]);
     },
 
     cadastraItem(obj){
