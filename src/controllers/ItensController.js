@@ -29,7 +29,7 @@ module.exports = {
     async listarItem(req, res){
         let json = {error:'', result:[]};
 
-        let id = req.params.id;
+        let id = JSON.parse(req.params.id);
         console.log("valor requisição: "+id)
         console.log("valor requisição: "+id.filtro)
         console.log("valor requisição: "+id.valor)
