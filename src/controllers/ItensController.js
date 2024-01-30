@@ -31,6 +31,8 @@ module.exports = {
 
         let id = req.params.id;
         console.log("valor requisição: "+id)
+        console.log("valor requisição: "+id.filtro)
+        console.log("valor requisição: "+id.valor)
         let itens = await ItemService.listarItem(id);
         
         if(itens)
