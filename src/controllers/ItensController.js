@@ -34,7 +34,7 @@ module.exports = {
         console.log("valor requisição: "+id)
         console.log("valor requisição: "+id.filtro)
         console.log("valor requisição: "+id.valor)
-        let itens = await ItemService.listarItem(id);
+        let itens = await ItemService.listarItem(id.filtro, id.valor);
         
         if(itens)
             json.result = itens
