@@ -3,7 +3,7 @@ const ItemService = require('../services/ItensServices');
 
 module.exports = {
     async listarTudo(req, res){
-        console.log('Chegou no controller');
+        console.log('Listar ítens');
         let json = {error:'', result:[]};
 
         let itens = await ItemService.listarItens();
@@ -27,6 +27,7 @@ module.exports = {
     },
 
     async listarItem(req, res){
+        console.log('Listar ítem');
         let json = {error:'', result:[]};
 
         let id = JSON.parse(req.params.id);
@@ -41,6 +42,7 @@ module.exports = {
     },
 
     async cadastrarItem(req, res){
+        console.log('Cadastrar ítem');
         let json = {error:'', result:[]};
         
         let obj = {
@@ -69,6 +71,7 @@ module.exports = {
     },
 
     async modificarItem(req, res){
+        console.log('Modificar ítem');
         let json = {error:'', result:[]};
 
         let id = req.params.id;
@@ -84,6 +87,7 @@ module.exports = {
     },
 
     async editarItem(req, res){
+        console.log('Editar ítem');
         let json = {error:'', result:[]};
 
         let obj = {
@@ -109,6 +113,7 @@ module.exports = {
     },
 
     async deletarItem(req, res){
+        console.log('Deletar ítem');
         let json = {error:'', result:[]};
 
         let id = req.params.id
