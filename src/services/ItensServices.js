@@ -22,7 +22,7 @@ module.exports = {
     },
 
     modificarItem(st, id ){
-        return db.query('UPDATE public.materiais SET st = $1 WHERE (id = $2)',[JSON.stringify(st), id]);
+        return db.query(`UPDATE public.materiais SET st = $1 WHERE (id = $2)`,[JSON.stringify(st), id]);
     },
 
     editarItem(obj){
@@ -32,7 +32,7 @@ module.exports = {
 
     },
 
-    deletearItem(id){
-        return db.query('DELETE FROM public.materiais WHERE id = $1',[id]);
+    deletearItem(filtro, valor){
+        return db.query(`DELETE FROM public.materiais WHERE ${filtro} = $1`,[valor]);
     }
 }

@@ -63,7 +63,7 @@ module.exports = {
                 json.error = item[1];
             }
             else{
-                json.result = await ItemService.listarItem(item[0].id);
+                json.result = await ItemService.listarItem("id", item[0].id);
             }
         }else
             json.error = 'Campos não enviados.';
@@ -74,12 +74,12 @@ module.exports = {
         console.log('Modificar ítem');
         let json = {error:'', result:[]};
 
-        let id = req.params.id;
+        let id = JSON.parse(req.params.id);
         let st = req.body.status;
         
         if(st && id){
             await ItemService.modificarItem(st, id);
-            json.result = await ItemService.listarItem(id);
+            json.result = await ItemService.listarItem("id", id);
         }else{
             json.error = 'Campos não enviados'
         }
@@ -104,7 +104,7 @@ module.exports = {
        
         if(obj.id && obj.codigo && obj.tipo){
             await ItemService.editarItem(obj);
-            json.result = await ItemService.listarItem(obj.id);
+            json.result = await ItemService.listarItem("id", obj.id);
         }else{
             json.error = 'Campos não enviados';
         }
@@ -116,10 +116,10 @@ module.exports = {
         console.log('Deletar ítem');
         let json = {error:'', result:[]};
 
-        let id = req.params.id
+        let id = JSON.parse(req.params.id);
 
         if(id){
-            await ItemService.deletearItem(id);
+            await ItemService.deletearItem(id.filtro, id.valor);
         }
     }
 }
