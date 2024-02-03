@@ -11,9 +11,9 @@ module.exports = {
         return db.query(`SELECT * FROM public.materiais WHERE ${filtro} = $1`,valor);
     },
 
-    listarItem(id){
+    /*listarItem(id){
         return db.query(`SELECT * FROM public.materiais WHERE id = $1`,id);
-    },
+    },*/
 
     cadastraItem(obj){
         const values = [obj.codigo, obj.tipo, obj.localizacao, obj.n_serie, obj.modelo, obj.fabricante, obj.descricao, JSON.stringify(obj.st)];
