@@ -33,6 +33,7 @@ module.exports = {
     },
 
     deletearItem(filtro, valor){
+        console.log('filtro: '+filtro +', valor: '+valor)
         return db.query(`DELETE FROM public.materiais WHERE ${filtro} = $1`,[valor]);
     }
 }

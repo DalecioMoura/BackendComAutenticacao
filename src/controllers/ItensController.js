@@ -79,7 +79,7 @@ module.exports = {
         
         if(st && id){
             await ItemService.modificarItem(st, id);
-            json.result = await ItemService.listarItem("id", id);
+            json.result = await ItemService.listarItem(id.codigo, id.valor);
         }else{
             json.error = 'Campos não enviados'
         }
@@ -117,7 +117,7 @@ module.exports = {
         let json = {error:'', result:[]};
 
         let id = JSON.parse(req.params.id);
-
+        console.log('id');
         if(id){
             await ItemService.deletearItem(id.filtro, id.valor);
         }
