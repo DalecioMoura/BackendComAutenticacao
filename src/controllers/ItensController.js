@@ -77,7 +77,7 @@ module.exports = {
         let id = JSON.parse(req.params.id);
         let st = req.body.status;
         
-        if(st && id){
+        if(st && id.filtro && id.valor){
             await ItemService.modificarItem(st, id.filtro, id.valor);
             json.result = await ItemService.listarItem(id.codigo, id.valor);
         }else{
@@ -117,9 +117,11 @@ module.exports = {
         let json = {error:'', result:[]};
 
         let id = JSON.parse(req.params.id);
-        console.log('id');
-        if(id){
-            await ItemService.deletearItem(id.filtro, id.valor);
+        if(id.filtro && id.valor){
+            let retorno = await ItemService.deletearItem(id.filtro, id.valor);
+            json.result - retorno;
+        }else{
+            json.error = 'O ítem não foi deletado!';
         }
     }
 }
