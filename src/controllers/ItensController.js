@@ -76,8 +76,8 @@ module.exports = {
 
         let id = JSON.parse(req.params.id);
         let st = req.body.status;
-        console.log(st);
-        console.log(JSON.stringify(st).st);
+        
+        console.log(JSON.stringify(st));
         console.log(id);
         console.log(id.filtro);
         console.log(id.valor);
