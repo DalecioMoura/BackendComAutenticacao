@@ -76,6 +76,8 @@ module.exports = {
 
         let id = JSON.parse(req.params.id);
         let st = req.body.status;
+        console.log(st);
+        console.log(JSON.stringify(st).st);
         console.log(id);
         console.log(id.filtro);
         console.log(id.valor);
@@ -83,7 +85,7 @@ module.exports = {
             await ItemService.modificarItem(st, id.filtro, id.valor);
             json.result = await ItemService.listarItem(id.codigo, id.valor);
         }else{
-            json.error = 'Campos não enviados' + id
+            json.error = 'Campos não enviados'
         }
         res.json(json);
     },
