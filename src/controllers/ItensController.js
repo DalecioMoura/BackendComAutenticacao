@@ -78,7 +78,7 @@ module.exports = {
         let st = req.body.status;
         
         if(st && id){
-            await ItemService.modificarItem(st, id);
+            await ItemService.modificarItem(st, id.filtro, id.valor);
             json.result = await ItemService.listarItem(id.codigo, id.valor);
         }else{
             json.error = 'Campos não enviados'

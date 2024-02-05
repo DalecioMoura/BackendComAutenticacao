@@ -21,8 +21,8 @@ module.exports = {
         return db.query(sql, values);
     },
 
-    modificarItem(st, id ){
-        return db.query(`UPDATE public.materiais SET st = $1 WHERE (id = $2)`,[JSON.stringify(st), id]);
+    modificarItem(st, filtro, valor ){
+        return db.query(`UPDATE public.materiais SET st = $1 WHERE (${filtro} = $2)`,[JSON.stringify(st), valor]);
     },
 
     editarItem(obj){
