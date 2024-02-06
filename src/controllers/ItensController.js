@@ -78,7 +78,6 @@ module.exports = {
         let st = req.body.status;
         
         console.log(JSON.stringify(st));
-        console.log(id);
         console.log(id.filtro);
         console.log(id.valor);
         if(st && id.filtro && id.valor){
