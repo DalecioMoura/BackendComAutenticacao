@@ -18,6 +18,24 @@ module.exports = {
         res.json(json);
     },
 
+    async listarUsuario(req, res){
+        let json = {error:'', result:[]};
+
+        let filtro = JSON.parse(req.params.id);
+        console.log(filtro.filtro);
+        console.log(filtro.valor);
+        let usuario = await UsuariosServices.listarUsuario(filtro.filtro, filtro.valor);
+
+        if(filtro)
+            json.result.push(usuario);
+        else
+            json.error = 'Usuário não encontrado!'
+
+        res.json(json);
+
+        console.log(filtro);
+    },
+
     async cadastrarUsuario(req, res){
         let json = {error:'', result:[]};
         console.log('chegou no controller')

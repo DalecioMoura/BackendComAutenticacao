@@ -13,6 +13,7 @@ router.put('/item/:id', bodyParser.json(), ItensController.editarItem);
 router.delete('/item/:id', ItensController.deletarItem);
 
 router.get('/usuarios', UsuariosController.listarUsuarios);
+router.get('/usuario/:id', UsuariosController.listarUsuario);
 router.post('/usuario', bodyParser.json(),UsuariosController.cadastrarUsuario);
 router.put('/usuario/:id', UsuariosController.modificarUsuario);
 router.delete('/usuario/:id', UsuariosController.deletarUsuario);
