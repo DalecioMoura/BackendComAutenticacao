@@ -121,9 +121,10 @@ module.exports = {
         let id = JSON.parse(req.params.id);
         if(id.filtro && id.valor){
             let retorno = await ItemService.deletearItem(id.filtro, id.valor);
-            json.result - retorno;
+            json.result = retorno;
         }else{
             json.error = 'O ítem não foi deletado!';
         }
+        res.json(json);
     }
 }
