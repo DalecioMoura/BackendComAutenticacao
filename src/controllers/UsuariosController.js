@@ -59,6 +59,7 @@ module.exports = {
     },
 
     async modificarUsuario(req, res){
+        console.log('editar usuário')
         let json = {error:'', result:[]}
 
         let obj = {
@@ -69,8 +70,8 @@ module.exports = {
             setor:req.body.setor
         };
         if(obj.matricula && obj.nome){
-            let usuario = await UsuariosServices.modificarUsuario(obj);
-            console.log(usuario);
+            await UsuariosServices.modificarUsuario(obj);
+            console.log('usuario editado!');
             json.result = await UsuariosServices.listarUsuario('id', obj.id);
         
         }else{
