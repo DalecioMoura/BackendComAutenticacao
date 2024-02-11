@@ -8,7 +8,7 @@ module.exports = {
 
     listarUsuario(filtro, valor){
         console.log('Listar usuário');
-        return db.query(`SELECT * FROM public.usuarios ${filtro} = $1`, valor);
+        return db.query(`SELECT * FROM public.usuarios WHERE ${filtro} = $1`, valor);
     },
 
     /*listarUsuario(filtro, valor){
