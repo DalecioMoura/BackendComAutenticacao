@@ -26,8 +26,8 @@ module.exports = {
         console.log(filtro.valor);
         let usuario = await UsuariosServices.listarUsuario(filtro.filtro, filtro.valor);
 
-        if(filtro)
-            json.result.push(usuario);
+        if(usuario)
+            json.result = usuario;
         else
             json.error = 'Usuário não encontrado!'
 
