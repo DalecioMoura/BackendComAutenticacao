@@ -71,7 +71,7 @@ module.exports = {
         if(obj.matricula && obj.nome){
             let usuario = await UsuariosServices.modificarUsuario(obj);
             console.log(usuario);
-            json.result = await UsuariosServices.modificarUsuario(obj.id);
+            json.result = await UsuariosServices.listarUsuario('id', obj.id);
         
         }else{
             json.error = 'Dados não enviados!'
