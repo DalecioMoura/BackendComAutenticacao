@@ -3,7 +3,7 @@ const db = require('../db');
 module.exports = {
 
     listarUsuarios(){
-        return db.query('SELECT * FROM public.usuarios');
+        return db.query('SELECT * FROM public.usuarios ORDER BY id');
     },
 
     listarUsuario(filtro, valor){
@@ -24,6 +24,7 @@ module.exports = {
         },
     
     deletarUsuario(id){
-        return db.query('DELETE public.usuarios WHERE (id = $1)', id);    
+        console.log('Deletar usuário do banco de dados!');
+        return db.query('DELETE FROM public.usuarios WHERE (id = $1)', id);
         }
 }

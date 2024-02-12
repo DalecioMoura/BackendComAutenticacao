@@ -82,11 +82,17 @@ module.exports = {
     },
     
     async deletarUsuario(req, res){
+        console.log('Deletar usuário!');
         let json = {error:'', result:[]};
 
         let id = req.params.id;
 
-        if(id)
-            await UsuariosServices.deletarUsuario(id);
+        if(id){
+            let retorno = await UsuariosServices.deletarUsuario(id);
+            json.result = retorno;
+        }
+        else
+            json.error = 'O usuário não foi excluído do banco de dados'
+        res.json(json);
     }
 }
