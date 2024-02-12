@@ -51,7 +51,7 @@ module.exports = {
         if(obj.matricula && obj.nome && obj.apelido){
             let usuario = await UsuariosServices.cadastrarUsuario(obj);
             console.log(usuario[0]);
-            json.result = await UsuariosServices.listarUsuarios(usuario[0].id);
+            json.result = await UsuariosServices.listarUsuario('id', usuario[0].id);
         }else{
             json.error = 'Usuário não cadastrado'
         }
