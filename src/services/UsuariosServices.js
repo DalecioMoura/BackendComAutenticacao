@@ -18,7 +18,8 @@ module.exports = {
         },
 
     modificarUsuario(obj){
-       return db.query('UPDATE public.usuarios SET matricula = $1, nome = $2 apelido =$3, setor = $4 WHERE (id = $5)',
+        console.log('Editar usuário no banco de dados');
+       return db.query('UPDATE public.usuarios SET matricula = $1, nome = $2, apelido =$3, setor = $4 WHERE (id = $5)',
             [obj.matricula, obj.nome, obj.apelido, obj.setor, obj.id]);
         },
     
