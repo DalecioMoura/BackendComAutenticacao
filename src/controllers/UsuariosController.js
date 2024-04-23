@@ -14,7 +14,7 @@ module.exports = {
                 apelido:usuarios[i].apelido,
                 setor:usuarios[i].setor,
                 email:usuarios[i].email,
-                usuario:usuarios[i]
+                usuario:usuarios[i].usuario
             });
         }
         res.json(json);
