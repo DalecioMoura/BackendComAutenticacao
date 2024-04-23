@@ -12,7 +12,9 @@ module.exports = {
                 matricula:usuarios[i].matricula,
                 nome:usuarios[i].nome,
                 apelido:usuarios[i].apelido,
-                setor:usuarios[i].setor
+                setor:usuarios[i].setor,
+                email:usuarios[i].email,
+                usuario:usuarios[i]
             });
         }
         res.json(json);
@@ -45,7 +47,9 @@ module.exports = {
             matricula:req.body.matricula,
             nome:req.body.nome,
             apelido:req.body.apelido,
-            setor:req.body.setor
+            setor:req.body.setor,
+            email:req.body.email,
+            usuario:req.body.usuario
         }
 
         if(obj.matricula && obj.nome && obj.apelido){
@@ -67,7 +71,9 @@ module.exports = {
             matricula:req.body.matricula,
             nome:req.body.nome,
             apelido:req.body.apelido,
-            setor:req.body.setor
+            setor:req.body.setor,
+            email:req.body.email,
+            usuario:req.body.usuario
         };
         if(obj.matricula && obj.nome){
             await UsuariosServices.modificarUsuario(obj);
