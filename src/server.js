@@ -8,15 +8,16 @@ const routes = require('./routes');
 const server = express();
 
 
-server.use((req, res, next) => {
+/*server.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods", 'GET, PUT, PATCH, POST, DELETE');
     res.header("Access-Control-Allow-Headers", 'X-PINGOTHER, Content-Type');
     
     server.use(cors());
     next();
-});
+});*/
 
+server.use(cors());
 
 server.use(bodyParser.urlencoded({extended:false}));
 
