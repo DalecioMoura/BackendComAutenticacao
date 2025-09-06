@@ -6,7 +6,7 @@ const UsuariosController = require('./controllers/UsuariosController');
 const bodyParser = require('body-parser');
 
 router.get('/itens', ItensController.listarTudo);
-router.get('/item/:id', ItensController.listarItem);
+router.get('/item/', ItensController.listarItem);//router.get('/item/:id', ItensController.listarItem);
 router.post('/item', bodyParser.json(), ItensController.cadastrarItem);
 router.patch('/item/:id', bodyParser.json(), ItensController.modificarItem);
 router.put('/item/:id', bodyParser.json(), ItensController.editarItem);

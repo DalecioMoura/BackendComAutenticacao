@@ -30,11 +30,12 @@ module.exports = {
         console.log('Listar ítem');
         let json = {error:'', result:[]};
 
-        let id = JSON.parse(req.params.id);
-        console.log("valor requisição: "+id)
-        console.log("valor requisição: "+id.filtro)
-        console.log("valor requisição: "+id.valor)
-        let itens = await ItemService.listarItem(id.filtro, id.valor);
+        let filtro = req.query.filtro;
+        let valor = req.query.valor;
+        console.log("valor requisição: "+req.query);
+        console.log("valor requisição: "+filtro);
+        console.log("valor requisição: "+valor);
+        let itens = await ItemService.listarItem(filtro, valor);
         
         if(itens)
             json.result = itens
