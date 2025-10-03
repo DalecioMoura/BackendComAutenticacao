@@ -5,7 +5,7 @@ module.exports = {
         let json = {error:'', result:[]};
 
         let usuarios = await UsuariosServices.listarUsuarios();
-
+        //console.log(usuarios);
         for(let i in usuarios){
             json.result.push({
                 id:usuarios[i].id,
@@ -21,13 +21,15 @@ module.exports = {
     },
 
     async listarUsuario(req, res){
+        console.log('Listar usuário');
         let json = {error:'', result:[]};
 
-        let filtro = JSON.parse(req.params.id);
-        console.log(filtro.filtro);
-        console.log(filtro.valor);
-        let usuario = await UsuariosServices.listarUsuario(filtro.filtro, filtro.valor);
-
+        let filtro = req.query.filtro;
+        let valor = req.query.valor;
+        //console.log(filtro.filtro);
+        //console.log(filtro.valor);
+        let usuario = await UsuariosServices.listarUsuario(filtro, valor);
+        console.log(usuario);
         if(usuario)
             json.result = usuario;
         else
@@ -35,7 +37,7 @@ module.exports = {
 
         res.json(json);
 
-        console.log(filtro);
+        //console.log(filtro);
     },
 
     async cadastrarUsuario(req, res){

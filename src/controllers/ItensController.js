@@ -59,7 +59,8 @@ module.exports = {
    
         if(obj.codigo && obj.tipo){
             let item = await ItemService.cadastraItem(obj);
-            console.log('cadastro: '+item[0].id)
+            //console.log('cadastro: '+item[0].id)
+            console.log(JSON.stringify(item));
             if(item[0] == 'erro'){
                 json.error = item[1];
             }
@@ -75,14 +76,39 @@ module.exports = {
         console.log('Modificar ítem');
         let json = {error:'', result:[]};
 
-        let id = JSON.parse(req.params.id);
+        let codigo = req.params.codigo;
         let st = req.body.status;
         console.log(st);
-        console.log(id.filtro);
-        console.log(id.valor);
-        if(st && id.filtro && id.valor){
-            await ItemService.modificarItem(st, id.filtro, id.valor);
-            json.result = await ItemService.listarItem(id.filtro, id.valor);
+        console.log(codigo);
+        
+        if(st && codigo){
+
+            let item = await ItemService.listarItem('codigo', codigo);
+            console.log('lido: '+item[0].st.st);
+            console.log('enviado: '+st.st);
+            
+
+
+           if(st.st == item[0].st.st){
+            if(st.st == 'Indisponível'){
+                json.error = `Esse item já está emprestado para ${item[0].st.nome}!`;
+                json.result = item
+            }
+                
+            if(st.st == 'Disponível'){
+                json.error = 'Esse item já foi devolvido!';
+                json.result = item
+            }
+                
+            res.json(json);
+            return;
+           }
+            
+            await ItemService.modificarItem(st, codigo);
+
+            json.result = await ItemService.listarItem('codigo', codigo);
+            
+            console.log(json.result);
         }else{
             json.error = 'Campos não enviados'
         }
@@ -119,10 +145,12 @@ module.exports = {
         console.log('Deletar ítem');
         let json = {error:'', result:[]};
 
-        let id = JSON.parse(req.params.id);
-        if(id.filtro && id.valor){
-            let retorno = await ItemService.deletearItem(id.filtro, id.valor);
-            json.result = retorno;
+        let codigo = req.params.codigo;
+        console.log(codigo);
+        if(codigo){
+            let retorno = await ItemService.deletearItem('codigo', codigo);
+            console.log(retorno.rowCount);
+            json.result = retorno.rowCount;
         }else{
             json.error = 'O ítem não foi deletado!';
         }

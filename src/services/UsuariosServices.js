@@ -3,12 +3,12 @@ const db = require('../db');
 module.exports = {
 
     listarUsuarios(){
-        return db.query('SELECT * FROM public.usuarios ORDER BY id');
+        return db.query('SELECT id, matricula, nome, apelido, setor, email, usuario FROM public.usuarios ORDER BY id');
     },
 
     listarUsuario(filtro, valor){
         console.log('Listar usuário');
-        return db.query(`SELECT * FROM public.usuarios WHERE ${filtro} = $1`, valor);
+        return db.query(`SELECT id, matricula, nome, apelido, setor, email, usuario FROM public.usuarios WHERE ${filtro} = $1`, valor);
     },
 
     cadastrarUsuario(obj){

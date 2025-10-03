@@ -23,9 +23,9 @@ module.exports = {
         return db.query(sql, values);
     },
 
-    modificarItem(st, filtro, valor ){
+    modificarItem(st, valor ){
         console.log('Atualizar banco de dados!')
-        return db.query(`UPDATE public.materiais SET st = $1 WHERE (${filtro} = $2)`,[JSON.stringify(st), valor]);
+        return db.query(`UPDATE public.materiais SET st = $1 WHERE (codigo = $2)`,[JSON.stringify(st), valor]);
     },
 
     editarItem(obj){
@@ -35,8 +35,8 @@ module.exports = {
 
     },
 
-    deletearItem(filtro, valor){
-        console.log('Deletar ítem do banco de dados!')
-        return db.query(`DELETE FROM public.materiais WHERE ${filtro} = $1`,[valor]);
+    deletearItem(codigo, valor){
+        console.log('Deletar ítem do banco de dados!');
+        return db.result(`DELETE FROM public.materiais WHERE ${codigo} = $1`,[valor]);    
     }
 }
