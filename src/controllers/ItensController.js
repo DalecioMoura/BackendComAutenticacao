@@ -80,15 +80,88 @@ module.exports = {
         let st = req.body.status;
         console.log(st);
         console.log(codigo);
+
+        if(!st || !codigo || !st.st){
+            json.error = "Campos obrigatórios (status e código) não enviados.";
+            return res.status(400).json(json);
+        }
+
+        try {
+
+            let item = await ItemService.listarItem('codigo', codigo);
+            console.log('lido: '+item[0].st.st);
+            console.log('enviado: '+st.st);
+
+            if(!item || item.length === 0){
+                json.error = "Material não encontrado.";
+                return res.status(404).json(json);
+            }
+
+            const statusAtual = item[0].st.st;
+
+            console.log('status atual: ', statusAtual);
+
+            if(st.st == statusAtual){
+                if(st.st == 'Indisponível'){
+                    json.error = `Esse item já está emprestado para ${item[0].st.nome}!`;
+                    json.result = item
+                }
+                    
+                if(st.st == 'Disponível'){
+                    json.error = 'Esse item já foi devolvido!';
+                    json.result = item
+                }
+                
+                res.json(json);
+                return;
+           }
+
+            let resultado = '';
+
+            if(st.st == "Disponível"){
+                console.log('entrou na devolução');
+                resultado = await ItemService.iniciarDevolucao(st, codigo);
+                console.log('resultado: ',JSON.stringify(resultado));
+                //json.result = resultado.item;
+            }
+            else{
+                console.log('entrou na retirada');
+                resultado = await ItemService.iniciarRetirada(st, codigo);
+                console.log('resultado: ',JSON.stringify(resultado));
+                //json.result = resultado.item;
+
+            }
+
+            if(resultado.sucesso){
+                console.log('deu certo');
+                json.result = resultado.item;//await ItemService.listarItem('codigo', codigo);
+                console.log('resultado.item: ',json.result);
+                return res.json(json);
+            }           
+            else{
+                console.log('não deu certo');
+                json.error = resultado.mensagem;
+                console.log(JSON.stringify(resultado));
+                console.log(resultado.sucesso);
+                console.log(resultado.resultadoHistoricoId);
+                console.log(resultado.item);
+                return res.status(400).json(json);
+            }
+
+        } 
+        catch (error) {
+            console.log('não deu certo mesmo');
+            console.error("Erro no controller: ", error);
+            json.error = 'Erro interno do servidor ao processar a modificação.';
+            return res.status(500).json(json);
+        }
         
-        if(st && codigo){
+        /*if(st && codigo){
 
             let item = await ItemService.listarItem('codigo', codigo);
             console.log('lido: '+item[0].st.st);
             console.log('enviado: '+st.st);
             
-
-
            if(st.st == item[0].st.st){
             if(st.st == 'Indisponível'){
                 json.error = `Esse item já está emprestado para ${item[0].st.nome}!`;
@@ -104,16 +177,28 @@ module.exports = {
             return;
            }
             
-            await ItemService.modificarItem(st, codigo);
+            const resultado = await ItemService.modificarItem(st, codigo);
+            console.log('resultado controller: ', resultado);
 
             json.result = await ItemService.listarItem('codigo', codigo);
+
+            if(st.st == "Disponível"){
+                ItemService.iniciarDevolucao(codigo);
+            }
+            else{
+                ItemService.iniciarRetirada(codigo, st);
+            }
             
             console.log(json.result);
         }else{
             json.error = 'Campos não enviados'
         }
-        res.json(json);
+        res.json(json);*/
     },
+
+
+
+
 
     async editarItem(req, res){
         console.log('Editar ítem');
@@ -157,3 +242,7 @@ module.exports = {
         res.json(json);
     }
 }
+
+
+
+
