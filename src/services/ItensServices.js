@@ -70,7 +70,7 @@ module.exports = {
 
     modificarHistorico(id){
         console.log('Atualizar banco de dados!')
-        return db.query(`UPDATE public.historico SET data_devolucao = NOW() WHERE id = $1`,[id]);
+        return db.query(`UPDATE public.historico SET data_devolucao = NOW() AT TIME ZONE 'America/Fortaleza' WHERE id = $1`,[id]);
     },
 
     async iniciarDevolucao(st, codigo){
@@ -92,7 +92,7 @@ module.exports = {
 
             const historicoIdAberto = resultadoSelect[0].id;
 
-            const historicoAtualizado = await db.query(`UPDATE public.historico SET data_devolucao = NOW() WHERE id = $1 RETURNING *`,[historicoIdAberto]);
+            const historicoAtualizado = await db.query(`UPDATE public.historico SET data_devolucao = NOW() AT TIME ZONE 'America/Fortaleza' WHERE id = $1 RETURNING *`,[historicoIdAberto]);
             console.log('HISTORICO: ', historicoAtualizado);
             const item = await this.modificarItem(st, codigo);
 
