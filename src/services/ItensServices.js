@@ -108,7 +108,7 @@ module.exports = {
 
     exibirTodoHistorico(){
         console.log('Listar ítens!');
-        return db.query(`SELECT id, codigo, material, nome, matricula, destino, TO_CHAR(data_retirada, 'YYYY-MM-DD') AS data_retirada, TO_CHAR(data_devolucao, 'YYYY-MM-DD') AS data_devolucao FROM public.historico ORDER BY codigo`);
+        return db.query(`SELECT id, codigo, material, nome, matricula, destino, TO_CHAR(data_retirada, 'YYYY-MM-DD') AS data_retirada, TO_CHAR(data_devolucao, 'YYYY-MM-DD') AS data_devolucao FROM public.historico ORDER BY data_devolucao DESC, codigo ASC, id DESC`);
     },
 
     exibirHistorico(codigo){
