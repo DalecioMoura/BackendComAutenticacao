@@ -9,6 +9,7 @@ const authController = require('./controllers/authController');
 router.post('/register', authController.register);
 router.post('/login', authController.login);
 router.post('/usuario',UsuariosController.cadastrarUsuario); //rota não deve ser protegida
+router.get('/ultimoslancamentos', ItensController.ultimosLancamentos);
 
 //aplica o middleware para todas as rotas que estão abaixo
 router.use(authMiddleware);
@@ -19,6 +20,7 @@ router.post('/item', ItensController.cadastrarItem);
 router.patch('/item/:codigo', ItensController.modificarItem);
 router.put('/item/:id', ItensController.editarItem);
 router.delete('/item/:codigo', ItensController.deletarItem);
+router.get('/historico/', ItensController.exibirHistorico);
 
 router.get('/usuarios', UsuariosController.listarUsuarios);
 router.get('/usuario/', UsuariosController.listarUsuario);//('/usuario/:id', UsuariosController.listarUsuario);

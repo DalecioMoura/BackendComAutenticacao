@@ -9,7 +9,7 @@ module.exports = {
 
     listarItem(filtro, valor){
         console.log('Listar ítem!');
-        return db.query(`SELECT * FROM public.materiais WHERE ${filtro} = $1`,valor);
+        return db.query(`SELECT * FROM public.materiais WHERE ${filtro} ILIKE $1`,[`%${valor}%`]);
     },
 
     /*listarItem(id){
@@ -45,13 +45,13 @@ module.exports = {
         return db.result(`DELETE FROM public.materiais WHERE ${codigo} = $1`,[valor]);    
     },
 
-    async iniciarRetirada(st, codigo){
+    async iniciarRetirada(st, tipo, codigo){
         console.log('Cadastrar ítem no banco de dados!')
-
+        console.log('tipo: ', tipo);
         try {
             await db.query('BEGIN');    //Inicia a transação
-            const values = [codigo, st.nome, st.matricula, st.destino, st.data];
-            const sql = 'INSERT INTO public.historico (codigo, nome, matricula, destino, data_retirada) VALUES ($1, $2, $3, $4, $5) RETURNING id;';
+            const values = [codigo, tipo, st.nome, st.matricula, st.destino, st.data];
+            const sql = 'INSERT INTO public.historico (codigo, material, nome, matricula, destino, data_retirada) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id;';
             const resultadoInsert = await db.query(sql, values);
 
             const item = await this.modificarItem(st, codigo);
@@ -70,7 +70,7 @@ module.exports = {
 
     modificarHistorico(id){
         console.log('Atualizar banco de dados!')
-        return db.query(`UPDATE public.historico SET data_devolucao = NOW() AT TIME ZONE 'America/Fortaleza' WHERE id = $1`,[id]);
+        return db.query(`UPDATE public.historico SET data_devolucao = CURRENT_DATE WHERE id = $1`,[id]);
     },
 
     async iniciarDevolucao(st, codigo){
@@ -92,7 +92,7 @@ module.exports = {
 
             const historicoIdAberto = resultadoSelect[0].id;
 
-            const historicoAtualizado = await db.query(`UPDATE public.historico SET data_devolucao = NOW() AT TIME ZONE 'America/Fortaleza' WHERE id = $1 RETURNING *`,[historicoIdAberto]);
+            const historicoAtualizado = await db.query(`UPDATE public.historico SET data_devolucao = CURRENT_DATE WHERE id = $1 RETURNING *`,[historicoIdAberto]);
             console.log('HISTORICO: ', historicoAtualizado);
             const item = await this.modificarItem(st, codigo);
 
@@ -103,7 +103,22 @@ module.exports = {
             await db.query('ROLLBACK');
             console.log('Erro na transação com o banco de dados', error);
             throw error;
-        }
-             
+        }           
     },
+
+    exibirTodoHistorico(){
+        console.log('Listar ítens!');
+        return db.query(`SELECT id, codigo, material, nome, matricula, destino, TO_CHAR(data_retirada, 'YYYY-MM-DD') AS data_retirada, TO_CHAR(data_devolucao, 'YYYY-MM-DD') AS data_devolucao FROM public.historico ORDER BY codigo`);
+    },
+
+    exibirHistorico(codigo){
+        console.log('Listar histórico!');
+        return db.query(`SELECT id, codigo, material, nome, matricula, destino, TO_CHAR(data_retirada, 'YYYY-MM-DD') AS data_retirada, TO_CHAR(data_devolucao, 'YYYY-MM-DD') AS data_devolucao FROM public.historico WHERE codigo = $1 ORDER BY id DESC`, codigo);
+    },
+
+    ultimosLancamentos(){
+            console.log('Listar histórico!');
+            return db.query(`SELECT id, codigo, material, nome, matricula, destino, TO_CHAR(data_retirada, 'YYYY-MM-DD') AS data_retirada, TO_CHAR(data_devolucao, 'YYYY-MM-DD') AS data_devolucao FROM public.historico WHERE data_devolucao IS NULL ORDER BY id DESC LIMIT 5`);
+        },
+
 }

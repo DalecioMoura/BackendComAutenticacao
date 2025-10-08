@@ -126,7 +126,7 @@ module.exports = {
             }
             else{
                 console.log('entrou na retirada');
-                resultado = await ItemService.iniciarRetirada(st, codigo);
+                resultado = await ItemService.iniciarRetirada(st, item[0].tipo, codigo);
                 console.log('resultado: ',JSON.stringify(resultado));
                 //json.result = resultado.item;
 
@@ -239,6 +239,40 @@ module.exports = {
         }else{
             json.error = 'O ítem não foi deletado!';
         }
+        res.json(json);
+    },
+
+    async exibirHistorico(req, res){
+        console.log('Exibir Histórico');
+
+        let json = {error:'', result:[]};
+
+        let codigo = req.query.codigo;
+        
+        console.log('Código1: ', codigo);
+       
+        if(codigo){
+            console.log('Código no if: ', codigo);
+            const historico = await ItemService.exibirHistorico(codigo);
+            console.log(historico);
+            json.result = historico;
+        }else{
+            const historico = await ItemService.exibirTodoHistorico(codigo);
+            console.log(historico);
+            json.result = historico;
+        }
+        res.json(json);
+    },
+
+    async ultimosLancamentos(req, res){
+        console.log('Exibir Histórico');
+
+        let json = {error:'', result:[]};
+
+        const historico = await ItemService.ultimosLancamentos();
+        console.log(historico);
+        json.result = historico;
+        
         res.json(json);
     }
 }
